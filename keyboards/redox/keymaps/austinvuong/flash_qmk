@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -e
+
+# A hardcoded helper to flash a keymap downloaded from the configurator site
+
+NAME="austinvuong" # name of the folder
+
+K_BOARD="redox_rev1_base"
+K_BOARD_DIR="redox/rev1/base"
+K_MAP="$NAME"
+
+if [ "$1" = "reconfig" ]; then
+    echo "Reconfiguring."
+    eval qmk config user.keyboard="$K_BOARD_DIR"
+    eval qmk config user.keymap="$K_MAP"
+fi
+
+query_kb=$(qmk config user.keyboard)
+if [ "$query_kb" = "user.keyboard=None" ]; then
+    echo "Auto configure user.keyboard"
+    qmk config user.keyboard="$K_BOARD_DIR"
+fi
+
+query_km=$(qmk config user.keymap)
+if [ "$query_km" = "user.keymap=None" ]; then
+    echo "Auto configure user.keymap"
+    qmk config user.keymap="$K_MAP"
+fi
+
+# Perpare and compile
+KEYMAP_SRC_DIR="$HOME/Downloads"
+KEYMAP_NAME="${K_BOARD}_${K_MAP}.json"
+KEYMAP_DIR="$HOME/qmk_userspace/keyboards/redox/keymaps/$NAME"
+KEYMAP_PDF="QMK Configurator.pdf"
+echo "$KEYMAP_SRC_DIR/$KEYMAP_PDF"
+# optional: move the default named PDF if it exists
+if [ -f "$KEYMAP_SRC_DIR/$KEYMAP_PDF" ]; then
+    echo "Moving the downloaded PDF as keymap.pdf"
+    mv "$KEYMAP_SRC_DIR/$KEYMAP_PDF" "$KEYMAP_DIR/keymap.pdf"
+fi
+
+if [ -f "$KEYMAP_SRC_DIR/$KEYMAP_NAME" ]; then
+    echo "Moving the keymap file from Downloads and generating the keymap.c"
+    cp "$KEYMAP_SRC_DIR/$KEYMAP_NAME" "$KEYMAP_DIR/$KEYMAP_NAME"
+fi
+
+qmk json2c "$KEYMAP_DIR/$KEYMAP_NAME" -o "$KEYMAP_DIR/keymap.c"
+qmk compile
+
+# Start flashing
+echo "Plug in the secondary board now."
+sleep 3
+qmk flash
+
+echo "Plug in the primary board now."
+sleep 3
+qmk flash
+
+echo "Flashing done."
+
+echo "Removing $KEYMAP_SRC_DIR/$KEYMAP_NAME so the next download uses the same name."
+rm "$KEYMAP_SRC_DIR/$KEYMAP_NAME"
