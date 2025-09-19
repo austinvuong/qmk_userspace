@@ -33,6 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_FRICTION 0.1
 #define MOUSEKEY_MOVE_DELTA 1
 
+#define CHORDAL_HOLD
+
 // #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 // #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
