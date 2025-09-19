@@ -30,19 +30,20 @@ fi
 
 # Perpare and compile
 KEYMAP_SRC_DIR="$HOME/Downloads"
-KEYMAP_NAME="${K_BOARD}_${K_MAP}.json"
+KEYMAP_NAME="${K_BOARD}_${K_MAP}"
 KEYMAP_DIR="$HOME/qmk_userspace/keyboards/redox/keymaps/$NAME"
-KEYMAP_PDF="QMK Configurator.pdf"
-echo "$KEYMAP_SRC_DIR/$KEYMAP_PDF"
+
+KEYMAP_FILE=$(fd "^$KEYMAP_NAME.*\.json$" ~/Downloads | sort -V | tail -1)
+
 # optional: move the default named PDF if it exists
 if [ -f "$KEYMAP_SRC_DIR/$KEYMAP_PDF" ]; then
     echo "Moving the downloaded PDF as keymap.pdf"
     mv "$KEYMAP_SRC_DIR/$KEYMAP_PDF" "$KEYMAP_DIR/keymap.pdf"
 fi
 
-if [ -f "$KEYMAP_SRC_DIR/$KEYMAP_NAME" ]; then
-    echo "Moving the keymap file from Downloads and generating the keymap.c"
-    cp "$KEYMAP_SRC_DIR/$KEYMAP_NAME" "$KEYMAP_DIR/$KEYMAP_NAME"
+if [ -n "$KEYMAP_FILE" ]; then
+    printf "\nCopy most recent keymap (%s) file from (%s) and generating keymap.c" "$KEYMAP_FILE" "$KEYMAP_SRC_DIR"
+    cp "$KEYMAP_FILE" "$KEYMAP_DIR/$KEYMAP_NAME"
 fi
 
 qmk json2c "$KEYMAP_DIR/$KEYMAP_NAME" -o "$KEYMAP_DIR/keymap.c"
@@ -58,6 +59,3 @@ sleep 3
 qmk flash
 
 echo "Flashing done."
-
-echo "Removing $KEYMAP_SRC_DIR/$KEYMAP_NAME so the next download uses the same name."
-rm "$KEYMAP_SRC_DIR/$KEYMAP_NAME"
