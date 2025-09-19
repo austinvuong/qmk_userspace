@@ -17,6 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#define NO_MUSIC_MODE
+#define LAYER_STATE_8BIT
+
 #define TAPPING_TOGGLE 3
 #define ONESHOT_TAP_TOGGLE 99
 #define ONESHOT_TIMEOUT 500

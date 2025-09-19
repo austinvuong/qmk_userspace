@@ -1,8 +1,21 @@
 DEFAULT_FOLDER = redox/rev1/base
+#LTO_ENABLE = yes
 
-# Disable unsupported hardware
+# Disable unsupported hardware and unused features
 AUDIO_SUPPORTED = no
 BACKLIGHT_SUPPORTED = no
+RGBLIGHT_ENABLE = no
 
+CONSOLE_ENABLE = no
+SPACE_CADET_ENABLE = no
+GRAVE_ESC_ENABLE = no
+# MAGIC_ENABLE = no
+
+MUSIC_ENABLE = no
+
+AVR_USE_MINIMAL_PRINTF = yes
+
+# Enable stuff
 MOUSEKEY_ENABLE = yes
 CAPS_WORDS_ENABLE = yes
+REPEAT_KEY_ENABLE = yes
