@@ -43,7 +43,7 @@ fi
 
 if [ -n "$KEYMAP_FILE" ]; then
     printf "\nCopy most recent keymap (%s) file from (%s) and generating keymap.c" "$KEYMAP_FILE" "$KEYMAP_SRC_DIR"
-    cp "$KEYMAP_FILE" "$KEYMAP_DIR/$KEYMAP_NAME"
+    cp "$KEYMAP_FILE" "$KEYMAP_DIR/$KEYMAP_NAME.json"
 fi
 
 if [ "$1" != "--no-j2c" ]; then
