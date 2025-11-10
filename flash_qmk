@@ -46,8 +46,13 @@ if [ -n "$KEYMAP_FILE" ]; then
     cp "$KEYMAP_FILE" "$KEYMAP_DIR/$KEYMAP_NAME"
 fi
 
-qmk json2c "$KEYMAP_DIR/$KEYMAP_NAME" -o "$KEYMAP_DIR/keymap.c"
-qmk compile
+if [ "$1" != "--no-j2c" ]; then
+    qmk json2c "$KEYMAP_FILE" | sed '1i #include "custom.h"' >"$KEYMAP_DIR/keymap.c"
+fi
+
+if [ "$1" != "--no-compile" ]; then
+    qmk compile
+fi
 
 # Start flashing
 echo "Plug in the secondary board now."
