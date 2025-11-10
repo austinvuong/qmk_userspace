@@ -47,7 +47,7 @@ if [ -n "$KEYMAP_FILE" ]; then
 fi
 
 if [ "$1" != "--no-j2c" ]; then
-    qmk json2c "$KEYMAP_FILE" | sed '1i #include "custom.h"' >"$KEYMAP_DIR/keymap.c"
+    qmk json2c "$KEYMAP_FILE" | sed '$a #include "custom.h"' >"$KEYMAP_DIR/keymap.c"
 fi
 
 if [ "$1" != "--no-compile" ]; then
