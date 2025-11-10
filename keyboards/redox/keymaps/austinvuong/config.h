@@ -23,7 +23,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TOGGLE 3
 #define ONESHOT_TAP_TOGGLE 99
 #define ONESHOT_TIMEOUT 500
-#define TAPPING_TERM 200
+#define TAPPING_TERM 250
+#define PERMISSIVE_HOLD
+#define CHORDAL_HOLD
+
+// #define FLOW_TAP_TERM 150
 
 #define MOUSEKEY_INERTIA
 #define MOUSEKEY_DELAY 20
@@ -33,7 +37,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_FRICTION 0.1
 #define MOUSEKEY_MOVE_DELTA 1
 
-#define CHORDAL_HOLD
 
 // #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 // #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
