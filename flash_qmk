@@ -46,8 +46,13 @@ if [ -n "$KEYMAP_FILE" ]; then
     cp "$KEYMAP_FILE" "$KEYMAP_DIR/$KEYMAP_NAME.json"
 fi
 
-if [ "$1" != "--no-j2c" ]; then
+if [ "$1" == "--j2c" ]; then
+    echo "overwriting keymap.c"
     qmk json2c "$KEYMAP_FILE" | sed '$a #include "custom.h"' >"$KEYMAP_DIR/keymap.c"
+    cat "./custom.c" >>"$KEYMAP_DIR/keymap.c"
+    # need to prepend the custom file to keymap
+    cat "./custom.c" "$KEYMAP_DIR/keymap.c" >"/tmp/qmk_keymap.c" && cp "/tmp/qmk_keymap.c" "$KEYMAP_DIR/keymap.c"
+
 fi
 
 if [ "$1" != "--no-compile" ]; then
